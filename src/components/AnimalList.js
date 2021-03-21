@@ -1,30 +1,27 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { selectAnimal } from "../actions";
 
-class AnimalList extends Component {
-    renderList() {
-        return this.props.animals.map((animal) => {
+export const AnimalList = () => {
+    const animals = useSelector((state) => state.animals);
+    const dispatch = useDispatch();
+
+    const renderList = () => {
+        return animals.map((animal) => {
             return (
                 <div className="item" key={animal.kind}>
                     <button
                         className="ui button primary"
-                        onClick={() => this.props.selectAnimal(animal)}
+                        onClick={() => dispatch(selectAnimal(animal))}
                     >
                         Show {animal.kind}
                     </button>
                 </div>
             );
         });
-    }
+    };
 
-    render() {
-        return <div className="ui divided list">{this.renderList()}</div>;
-    }
-}
-
-const mapStateToProps = (state) => {
-    return { animals: state.animals };
+    return <div className="ui divided list">{renderList()}</div>;
 };
 
-export default connect(mapStateToProps, { selectAnimal })(AnimalList);
+export default AnimalList;

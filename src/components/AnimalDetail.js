@@ -1,7 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
-const AnimalDetail = ({ animal }) => {
+const AnimalDetail = () => {
+    const animal = useSelector((state) => state.selectedAnimal);
+
     if (!animal) {
         return <div>Select a Animal</div>;
     }
@@ -10,14 +12,10 @@ const AnimalDetail = ({ animal }) => {
         <div>
             <h3>{`Animal Kind: ${animal.kind}`}</h3>
             <p>
-                <img alt={animal.kind} src={animal.img} width='200px'/>
+                <img alt={animal.kind} src={animal.img} width="200px" />
             </p>
         </div>
     );
 };
 
-const mapStateToProps = (state) => {
-    return { animal: state.selectedAnimal };
-};
-
-export default connect(mapStateToProps)(AnimalDetail);
+export default AnimalDetail;
